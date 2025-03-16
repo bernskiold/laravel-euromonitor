@@ -18,7 +18,7 @@ trait SupportsExchangeRate
         return $this;
     }
 
-    protected function buildQuerySupportsExchangeRate(array $query): array
+    public function buildQuerySupportsExchangeRate(array $query): array
     {
         if (is_null($this->exchangeRate)) {
             return $query;

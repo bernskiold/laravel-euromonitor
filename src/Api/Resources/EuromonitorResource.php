@@ -18,7 +18,7 @@ class EuromonitorResource
     /**
      * @throws InvalidEuromonitorQueryException
      */
-    protected function buildQuery(): array
+    public function buildQuery(): array
     {
         $query = [];
         $traits = class_uses($this);

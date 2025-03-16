@@ -23,7 +23,7 @@ trait SupportsGrowthType
         return $this->growthType(GrowthType::YearOnYear);
     }
 
-    protected function buildQuerySupportsGrowthType(array $query): array
+    public function buildQuerySupportsGrowthType(array $query): array
     {
         if (is_null($this->growthType)) {
             return $query;

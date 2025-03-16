@@ -27,7 +27,7 @@ class DataTypes extends EuromonitorResource
      */
     public function all(): ListResponse
     {
-        if ($this->measureType === null || ! in_array($this->measureType, UnitType::cases(), true)) {
+        if ($this->measureType === null) {
             throw InvalidEuromonitorQueryException::noMeasureType();
         }
 

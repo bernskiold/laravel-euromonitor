@@ -50,7 +50,7 @@ class BrandShare extends EuromonitorResource
      */
     public function all(): ListResponse
     {
-        if ($this->unit === null || ! in_array($this->unit, UnitType::cases(), true)) {
+        if ($this->unit === null) {
             throw InvalidEuromonitorQueryException::noUnit();
         }
 

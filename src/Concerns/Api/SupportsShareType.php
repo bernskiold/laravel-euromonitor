@@ -12,4 +12,11 @@ trait SupportsShareType
 
         return $this;
     }
+
+    public function buildQuerySupportsShareType(array $query): array
+    {
+        $query['shareTypeId'] = $this->shareType;
+
+        return $query;
+    }
 }

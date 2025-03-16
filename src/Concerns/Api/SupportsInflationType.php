@@ -17,7 +17,7 @@ trait SupportsInflationType
         return $this;
     }
 
-    protected function buildQuerySupportsInflationType(array $query): array
+    public function buildQuerySupportsInflationType(array $query): array
     {
         if (is_null($this->inflationType)) {
             return $query;

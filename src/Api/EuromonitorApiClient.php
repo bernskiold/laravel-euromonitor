@@ -69,18 +69,23 @@ class EuromonitorApiClient
     public function getToken(): object
     {
         try {
-            return Http::asForm()
+            $response = Http::asForm()
                 ->withHeaders([
                     'Accept' => 'application/json; '.$this->getVersionForHeader(),
-                    'Ocp-Apim-Subscription-Key' => config('services.euromonitor.api_key'),
+                    'Ocp-Apim-Subscription-Key' => $this->apiKey,
                 ])
                 ->withBody(http_build_query([
                     'username' => config('services.euromonitor.username'),
                     'password' => config('services.euromonitor.password'),
                     'grant_type' => 'password',
                 ]), 'application/x-www-form-urlencoded')
-                ->post(config('services.euromonitor.base_url').'/authentication/connect/token')
-                ->object();
+                ->post($this->baseUrl.'/authentication/connect/token');
+
+            if (!$response->successful()) {
+                throw EuromonitorApiException::noAccessToken(new \Exception($response->body()));
+            }
+
+            return $response->object();
         } catch (Throwable $e) {
             throw EuromonitorApiException::noAccessToken($e);
         }
@@ -120,12 +125,16 @@ class EuromonitorApiClient
      */
     public function get(string $endpoint, array $query = []): object|array
     {
-        return $this->authorize()
+        $response = $this->authorize()
             ->request
             ->withToken($this->accessToken)
-            ->get($this->baseUrl.'/'.$endpoint, $query)
-            ->throw()
-            ->object();
+            ->get($this->baseUrl.'/'.$endpoint, $query);
+
+        if (!$response->successful()) {
+            throw new \Illuminate\Http\Client\RequestException($response);
+        }
+
+        return $response->object();
     }
 
     /**
@@ -136,11 +145,15 @@ class EuromonitorApiClient
      */
     public function post(string $endpoint, array $data = []): object
     {
-        return $this->authorize()
+        $response = $this->authorize()
             ->request
             ->withToken($this->accessToken)
-            ->post($this->baseUrl.'/'.$endpoint, $data)
-            ->throw()
-            ->object();
+            ->post($this->baseUrl.'/'.$endpoint, $data);
+
+        if (!$response->successful()) {
+            throw new \Illuminate\Http\Client\RequestException($response);
+        }
+
+        return $response->object();
     }
 }

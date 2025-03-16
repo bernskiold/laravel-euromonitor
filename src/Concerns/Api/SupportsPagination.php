@@ -6,12 +6,12 @@ trait SupportsPagination
 {
     public int $currentPage = 0;
 
-    public ?int $perPage = null;
+    public int $perPage = 1_000;
 
-    protected function addPaginationToQuery(array $query): array
+    public function buildQuerySupportsPagination(array $query): array
     {
         $query['limit'] = $this->perPage;
-        $query['offset'] = ($this->currentPage + 1) * $this->perPage;
+        $query['offset'] = $this->currentPage * $this->perPage;
 
         return $query;
     }

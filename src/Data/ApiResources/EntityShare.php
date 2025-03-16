@@ -47,7 +47,7 @@ class EntityShare
             exchangeRateName: $response->exchangeRateName,
             unit: $response->unit,
             unitMultiplier: $response->unitMultiplier,
-            data: collect($response->data)
+            data: collect($response->data ?? [])
                 ->map(fn (object $datum) => Datum::fromResponse($datum)),
         );
     }

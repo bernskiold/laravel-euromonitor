@@ -17,7 +17,7 @@ trait SupportsCategories
         return $this;
     }
 
-    protected function buildQuerySupportsCategories(array $query): array
+    public function buildQuerySupportsCategories(array $query): array
     {
         if (! empty($this->categories)) {
             $query['categoryIds'] = $this->categories;

@@ -13,7 +13,7 @@ trait SupportsPerCapita
         return $this;
     }
 
-    protected function buildQuerySupportsPerCapita(array $query): array
+    public function buildQuerySupportsPerCapita(array $query): array
     {
         if ($this->perCapitaInsteadOfCountryTotal) {
             $query['perCapitaId'] = 1;

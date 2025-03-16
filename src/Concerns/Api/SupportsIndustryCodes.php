@@ -17,7 +17,7 @@ trait SupportsIndustryCodes
         return $this;
     }
 
-    protected function buildQueryIndustryCodes(array $query): array
+    protected function buildQuerySupportsIndustryCodes(array $query): array
     {
         if (! empty($this->industryCodes)) {
             $query['industryCodes'] = $this->industryCodes;

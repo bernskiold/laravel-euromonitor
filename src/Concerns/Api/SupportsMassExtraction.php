@@ -13,8 +13,6 @@ trait SupportsMassExtraction
 
     public FileType $fileType = FileType::Json;
 
-    abstract public function dispatch(): JobResponse;
-
     public function queueable(): self
     {
         $this->usesMassExtraction = true;
@@ -36,7 +34,7 @@ trait SupportsMassExtraction
         return $this;
     }
 
-    protected function buildQuerySupportsMassExtraction(array $query): array
+    public function buildQuerySupportsMassExtraction(array $query): array
     {
         if ($this->usesMassExtraction) {
             $query['FileType'] = $this->fileType->code();

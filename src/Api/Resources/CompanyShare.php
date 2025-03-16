@@ -52,11 +52,11 @@ class CompanyShare extends EuromonitorResource
      */
     public function all(): ListResponse
     {
-        if ($this->unit === null || ! in_array($this->unit, UnitType::cases(), true)) {
+        if ($this->unit === null) {
             throw InvalidEuromonitorQueryException::noUnit();
         }
 
-        $endpoint = "/statistics/companyshare/{$this->unit}";
+        $endpoint = "/statistics/companyshare/{$this->unit->value}";
         $response = $this->client->post($endpoint, $this->buildQuery());
 
         return new ListResponse(

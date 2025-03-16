@@ -13,7 +13,7 @@ trait SupportsLocalCurrency
         return $this;
     }
 
-    protected function buildQuerySupportsLocalCurrency(array $query): array
+    public function buildQuerySupportsLocalCurrency(array $query): array
     {
         if ($this->useLocalCurrency) {
             $query['localCurrency'] = true;

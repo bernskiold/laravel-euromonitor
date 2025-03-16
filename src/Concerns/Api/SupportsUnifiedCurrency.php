@@ -53,7 +53,7 @@ trait SupportsUnifiedCurrency
         return $this;
     }
 
-    protected function buildQuerySupportsUnifiedCurrency(array $query): array
+    public function buildQuerySupportsUnifiedCurrency(array $query): array
     {
         if (is_null($this->unifiedCurrency)) {
             return $query;

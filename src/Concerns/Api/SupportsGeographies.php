@@ -17,7 +17,7 @@ trait SupportsGeographies
         return $this;
     }
 
-    protected function buildQuerySupportsGeographies(array $query): array
+    public function buildQuerySupportsGeographies(array $query): array
     {
         if (! empty($this->geographies)) {
             $query['geographyIds'] = $this->geographies;

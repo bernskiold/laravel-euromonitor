@@ -17,7 +17,7 @@ trait SupportsDataTypes
         return $this;
     }
 
-    protected function buildQuerySupportsDataTypes(array $query): array
+    public function buildQuerySupportsDataTypes(array $query): array
     {
         if (! empty($this->dataTypes)) {
             $query['dataTypeIds'] = $this->dataTypes;

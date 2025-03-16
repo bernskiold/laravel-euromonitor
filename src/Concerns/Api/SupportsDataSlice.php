@@ -27,7 +27,7 @@ trait SupportsDataSlice
         return $this;
     }
 
-    protected function buildQuerySupportsDataSlice(array $query): array
+    public function buildQuerySupportsDataSlice(array $query): array
     {
         $query['DataSliceId'] = $this->dataSlice;
 

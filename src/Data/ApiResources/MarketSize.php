@@ -43,7 +43,7 @@ class MarketSize
             exchangeRateName: $response->exchangeRateName,
             perCapitaName: $response->perCapitaName,
             unitMultiplier: $response->unitMultiplier,
-            data: collect($response->data)
+            data: collect($response->data ?? [])
                 ->map(fn (object $datum) => Datum::fromResponse($datum)),
         );
     }

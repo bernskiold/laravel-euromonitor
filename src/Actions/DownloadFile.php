@@ -3,6 +3,8 @@
 namespace Bernskiold\LaravelEuromonitor\Actions;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+use RuntimeException;
 
 class DownloadFile
 {
@@ -14,7 +16,13 @@ class DownloadFile
         $filename = basename($fileUrl);
         $path = "{$folder}/{$filename}";
 
-        Storage::disk($disk)->put($path, file_get_contents($fileUrl));
+        $response = Http::get($fileUrl);
+
+        if (!$response->successful()) {
+            throw new RuntimeException("Failed to download file from {$fileUrl}");
+        }
+
+        Storage::disk($disk)->put($path, $response->body());
 
         if ($callback) {
             $callback($path, $disk);
