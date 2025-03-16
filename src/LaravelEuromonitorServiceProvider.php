@@ -18,7 +18,7 @@ class LaravelEuromonitorServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../config/euromonitor.php' => config_path('euromonitor.php'),
-        ], 'laravel-euromonitor-config');
+        ], 'config');
 
         if ($this->app->runningInConsole()) {
             $this->commands([

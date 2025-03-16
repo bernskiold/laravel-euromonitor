@@ -27,20 +27,23 @@ class EuromonitorApiClient
     public PendingRequest $request;
 
     public function __construct(
+        protected string $username,
+        protected string $password,
         protected string $apiKey,
         protected string $baseUrl,
         protected string $version,
-    ) {
+    )
+    {
         $this->request = Http::withHeaders([
             'Ocp-Apim-Subscription-Key' => $this->apiKey,
         ])
             ->contentType('application/json')
-            ->accept('application/json; '.$this->getVersionForHeader());
+            ->accept('application/json; ' . $this->getVersionForHeader());
     }
 
     protected function getVersionForHeader(): string
     {
-        return 'api-version='.$this->version;
+        return 'api-version=' . $this->version;
     }
 
     /**
@@ -49,6 +52,8 @@ class EuromonitorApiClient
     public static function fromConfig(array $config): static
     {
         return new static(
+            username: $config['username'],
+            password: $config['password'],
             apiKey: $config['api_key'],
             baseUrl: $config['base_url'],
             version: $config['version'],
@@ -68,27 +73,22 @@ class EuromonitorApiClient
      */
     public function getToken(): object
     {
-        try {
-            $response = Http::asForm()
-                ->withHeaders([
-                    'Accept' => 'application/json; '.$this->getVersionForHeader(),
-                    'Ocp-Apim-Subscription-Key' => $this->apiKey,
-                ])
-                ->withBody(http_build_query([
-                    'username' => config('services.euromonitor.username'),
-                    'password' => config('services.euromonitor.password'),
-                    'grant_type' => 'password',
-                ]), 'application/x-www-form-urlencoded')
-                ->post($this->baseUrl.'/authentication/connect/token');
+        $response = Http::asForm()
+            ->withHeaders([
+                'Accept' => 'application/json; ' . $this->getVersionForHeader(),
+                'Ocp-Apim-Subscription-Key' => $this->apiKey,
+            ])
+            ->post($this->baseUrl . '/authentication/connect/token', [
+                'username' => $this->username,
+                'password' => $this->password,
+                'grant_type' => 'password',
+            ]);
 
-            if (!$response->successful()) {
-                throw EuromonitorApiException::noAccessToken(new \Exception($response->body()));
-            }
-
-            return $response->object();
-        } catch (Throwable $e) {
-            throw EuromonitorApiException::noAccessToken($e);
+        if (!$response->successful()) {
+            throw EuromonitorApiException::noAccessToken(new \Exception($response->body()));
         }
+
+        return $response->object();
     }
 
     /**
@@ -128,7 +128,7 @@ class EuromonitorApiClient
         $response = $this->authorize()
             ->request
             ->withToken($this->accessToken)
-            ->get($this->baseUrl.'/'.$endpoint, $query);
+            ->get($this->baseUrl . '/' . $endpoint, $query);
 
         if (!$response->successful()) {
             throw new \Illuminate\Http\Client\RequestException($response);
@@ -148,7 +148,7 @@ class EuromonitorApiClient
         $response = $this->authorize()
             ->request
             ->withToken($this->accessToken)
-            ->post($this->baseUrl.'/'.$endpoint, $data);
+            ->post($this->baseUrl . '/' . $endpoint, $data);
 
         if (!$response->successful()) {
             throw new \Illuminate\Http\Client\RequestException($response);

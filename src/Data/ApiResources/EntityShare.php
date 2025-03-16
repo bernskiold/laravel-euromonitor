@@ -39,7 +39,7 @@ class EntityShare
             categoryName: $response->categoryName,
             industryCode: $response->industryCode,
             industryName: $response->industryName,
-            entityName: $response->entityName,
+            entityName: $response->companyName ?? $response->brandName,
             dataTypeId: $response->dataTypeId,
             dataTypeName: $response->dataTypeName,
             shareTypeId: $response->shareTypeId,

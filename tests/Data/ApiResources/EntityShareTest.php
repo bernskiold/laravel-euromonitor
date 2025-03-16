@@ -15,7 +15,7 @@ it('can create from response', function () {
         'categoryName' => 'Test Category',
         'industryCode' => 'TEST123',
         'industryName' => 'Test Industry',
-        'entityName' => 'Test Entity',
+        'companyName' => 'Test Entity',
         'dataTypeId' => 3,
         'dataTypeName' => 'Test Data Type',
         'shareTypeId' => 4,
