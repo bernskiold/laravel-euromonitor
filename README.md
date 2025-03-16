@@ -7,7 +7,28 @@
 
 ## Installation & Usage
 
-...
+You can install the package via composer:
+
+```bash
+composer require bernskiold/laravel-euromonitor
+```
+
+After installing the package, you may publish the configuration file:
+
+```bash
+php artisan vendor:publish --provider="Bernskiold\LaravelEuromonitor\LaravelEuromonitorServiceProvider" --tag="config"
+```
+
+This will publish a `euromonitor.php` file in your `config` directory.
+
+The core configuration parameters for connecting to the Euromonitor API are provided
+as environment variables in your `.env` file. These are:
+
+```dotenv
+EUROMONITOR_USERNAME=
+EUROMONITOR_PASSWORD=
+EUROMONITOR_API_KEY=
+```
 
 ## Testing
 
