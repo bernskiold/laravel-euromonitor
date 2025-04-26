@@ -34,7 +34,7 @@ trait SupportsDataSlice
 
     public function buildQuerySupportsDataSlice(array $query): array
     {
-        $queryKey = $this->forMassExtraction() ? 'DataSlideId' : 'DataSlideID';
+        $queryKey = $this->forMassExtraction() ? 'DataSliceId' : 'DataSliceID';
 
         $query[$queryKey] = $this->dataSlice;
 
