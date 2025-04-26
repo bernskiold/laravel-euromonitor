@@ -2,10 +2,14 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Enum\Context;
 
 use function is_null;
 
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsContext
 {
     public ?Context $context = null;

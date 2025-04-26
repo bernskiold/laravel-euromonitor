@@ -2,10 +2,14 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Support\Arguments;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsCategories
 {
     public array $categories = [];
@@ -19,8 +23,10 @@ trait SupportsCategories
 
     public function buildQuerySupportsCategories(array $query): array
     {
+        $queryKey = $this->forMassExtraction() ? 'CategoryIds' : 'categoryIds';
+
         if (! empty($this->categories)) {
-            $query['categoryIds'] = $this->categories;
+            $query[$queryKey] = $this->categories;
         }
 
         return $query;

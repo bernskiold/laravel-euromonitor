@@ -2,6 +2,11 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
+
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsShareType
 {
     public int|string $shareType = 0;
@@ -15,7 +20,9 @@ trait SupportsShareType
 
     public function buildQuerySupportsShareType(array $query): array
     {
-        $query['shareTypeId'] = $this->shareType;
+        $queryKey = $this->forMassExtraction() ? 'ShareTypeId' : 'shareTypeId';
+
+        $query[$queryKey] = $this->shareType;
 
         return $query;
     }

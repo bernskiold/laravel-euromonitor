@@ -2,8 +2,12 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Enum\MeasureType;
 
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsMeasureType
 {
     public ?MeasureType $measureType = null;

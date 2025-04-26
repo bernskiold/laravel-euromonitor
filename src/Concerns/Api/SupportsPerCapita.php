@@ -2,6 +2,11 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
+
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsPerCapita
 {
     public bool $perCapitaInsteadOfCountryTotal = false;

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 use function class_uses;
 use function method_exists;
+use function property_exists;
 
 class EuromonitorResource
 {
@@ -103,5 +104,14 @@ class EuromonitorResource
     protected function getMessages(): array
     {
         return [];
+    }
+
+    protected function forMassExtraction(): bool
+    {
+        if(!property_exists($this, 'usesMassExtraction')) {
+            return false;
+        }
+
+        return $this->usesMassExtraction;
     }
 }

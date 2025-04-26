@@ -3,6 +3,7 @@
 namespace Bernskiold\LaravelEuromonitor\Jobs;
 
 use Bernskiold\LaravelEuromonitor\Actions\DownloadFile;
+use Bernskiold\LaravelEuromonitor\Enum\Dataset;
 use Bernskiold\LaravelEuromonitor\Events\EuromonitorFileDownloaded;
 use Bernskiold\LaravelEuromonitor\Exceptions\EuromonitorDownloadException;
 use Bernskiold\LaravelEuromonitor\Facades\Euromonitor;
@@ -20,6 +21,7 @@ class DownloadEuromonitorFile implements ShouldQueue
 
     public function __construct(
         public string $jobId,
+        public Dataset $dataset,
     ) {
         $this->onQueue(config('euromonitor.mass_extraction.queue', 'default'));
     }
@@ -58,6 +60,6 @@ class DownloadEuromonitorFile implements ShouldQueue
 
         $downloadAction->execute($fileDetails->url);
 
-        event(new EuromonitorFileDownloaded($this->jobId, $fileDetails->url));
+        event(new EuromonitorFileDownloaded($this->dataset, $this->jobId, $fileDetails->url));
     }
 }

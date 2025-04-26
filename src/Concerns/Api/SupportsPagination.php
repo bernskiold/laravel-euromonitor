@@ -2,6 +2,11 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
+
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsPagination
 {
     public int $currentPage = 0;

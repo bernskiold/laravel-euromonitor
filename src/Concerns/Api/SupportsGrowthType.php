@@ -2,11 +2,16 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Enum\GrowthType;
 
 use function is_null;
 use function property_exists;
 
+
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsGrowthType
 {
     public ?GrowthType $growthType = null;
@@ -29,7 +34,7 @@ trait SupportsGrowthType
             return $query;
         }
 
-        if (property_exists($this, 'usesMassExtraction') && $this->usesMassExtraction) {
+        if ($this->forMassExtraction()) {
             $query['GrowthType'] = $this->growthType->code();
         } else {
             $query['growthType'] = $this->growthType->value;

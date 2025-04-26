@@ -2,10 +2,14 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Support\Arguments;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsGeographies
 {
     public array $geographies = [];
@@ -19,8 +23,10 @@ trait SupportsGeographies
 
     public function buildQuerySupportsGeographies(array $query): array
     {
+        $queryKey = $this->forMassExtraction() ? 'GeographyIds' : 'geographyIds';
+
         if (! empty($this->geographies)) {
-            $query['geographyIds'] = $this->geographies;
+            $query[$queryKey] = $this->geographies;
         }
 
         return $query;

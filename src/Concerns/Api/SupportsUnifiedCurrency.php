@@ -2,11 +2,15 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Enum\Currency;
 
 use function is_null;
 use function property_exists;
 
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsUnifiedCurrency
 {
     public ?Currency $unifiedCurrency = null;
@@ -59,7 +63,7 @@ trait SupportsUnifiedCurrency
             return $query;
         }
 
-        if (property_exists($this, 'usesMassExtraction') && $this->usesMassExtraction) {
+        if ($this->forMassExtraction()) {
             $query['UnifiedCurrency'] = $this->unifiedCurrency->code();
         } else {
             $query['unifiedCurrency'] = $this->unifiedCurrency->value;

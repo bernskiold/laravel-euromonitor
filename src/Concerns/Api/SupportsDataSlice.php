@@ -2,6 +2,11 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
+
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsDataSlice
 {
     public int $dataSlice = 1;
@@ -29,7 +34,9 @@ trait SupportsDataSlice
 
     public function buildQuerySupportsDataSlice(array $query): array
     {
-        $query['DataSliceId'] = $this->dataSlice;
+        $queryKey = $this->forMassExtraction() ? 'DataSlideId' : 'DataSlideID';
+
+        $query[$queryKey] = $this->dataSlice;
 
         return $query;
     }

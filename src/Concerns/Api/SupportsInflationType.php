@@ -2,10 +2,14 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Enum\InflationType;
 
 use function property_exists;
 
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsInflationType
 {
     public ?InflationType $inflationType = null;
@@ -23,7 +27,7 @@ trait SupportsInflationType
             return $query;
         }
 
-        if (property_exists($this, 'usesMassExtraction') && $this->usesMassExtraction) {
+        if ($this->forMassExtraction()) {
             $query['InflationType'] = $this->inflationType->code();
         } else {
             $query['inflationType'] = $this->inflationType->value;

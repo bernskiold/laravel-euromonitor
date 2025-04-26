@@ -18,6 +18,7 @@ use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsUnifiedCurrency;
 use Bernskiold\LaravelEuromonitor\Data\ApiResources\MarketSize as MarketSizeResource;
 use Bernskiold\LaravelEuromonitor\Data\JobResponse;
 use Bernskiold\LaravelEuromonitor\Data\ListResponse;
+use Bernskiold\LaravelEuromonitor\Enum\Dataset;
 use Bernskiold\LaravelEuromonitor\Exceptions\InvalidEuromonitorQueryException;
 use Bernskiold\LaravelEuromonitor\Jobs\DownloadEuromonitorFile;
 
@@ -64,7 +65,7 @@ class MarketSize extends EuromonitorResource
         $response = $this->client->post('/statistics/createmarketsizejob', $this->buildQuery());
 
         if ($this->automaticallyDownloadFile && isset($response->jobId)) {
-            dispatch(new DownloadEuromonitorFile($response->jobId));
+            dispatch(new DownloadEuromonitorFile($response->jobId,Dataset::MarketSize));
         }
 
         return new JobResponse(

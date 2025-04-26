@@ -2,9 +2,12 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
-use Bernskiold\LaravelEuromonitor\Data\JobResponse;
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Enum\FileType;
 
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsMassExtraction
 {
     public bool $usesMassExtraction = false;

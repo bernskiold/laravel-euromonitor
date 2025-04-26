@@ -19,6 +19,7 @@ use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsUnit;
 use Bernskiold\LaravelEuromonitor\Data\ApiResources\EntityShare;
 use Bernskiold\LaravelEuromonitor\Data\JobResponse;
 use Bernskiold\LaravelEuromonitor\Data\ListResponse;
+use Bernskiold\LaravelEuromonitor\Enum\Dataset;
 use Bernskiold\LaravelEuromonitor\Enum\UnitType;
 use Bernskiold\LaravelEuromonitor\Exceptions\InvalidEuromonitorQueryException;
 use Bernskiold\LaravelEuromonitor\Jobs\DownloadEuromonitorFile;
@@ -68,6 +69,10 @@ class CompanyShare extends EuromonitorResource
 
     public function dispatch(): JobResponse
     {
+        if ($this->unit === null) {
+            throw InvalidEuromonitorQueryException::noUnit();
+        }
+
         $this->queueable();
 
         $query = $this->buildQuery();
@@ -76,7 +81,7 @@ class CompanyShare extends EuromonitorResource
         $response = $this->client->post('/statistics/createcompanysharejob', $query);
 
         if ($this->automaticallyDownloadFile && isset($response->jobId)) {
-            dispatch(new DownloadEuromonitorFile($response->jobId));
+            dispatch(new DownloadEuromonitorFile($response->jobId, Dataset::CompanyShare));
         }
 
         return new JobResponse(

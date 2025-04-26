@@ -2,6 +2,11 @@
 
 namespace Bernskiold\LaravelEuromonitor\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
+
+/**
+ * @mixin EuromonitorResource
+ */
 trait SupportsLocalCurrency
 {
     public bool $useLocalCurrency = false;
@@ -15,8 +20,10 @@ trait SupportsLocalCurrency
 
     public function buildQuerySupportsLocalCurrency(array $query): array
     {
+
         if ($this->useLocalCurrency) {
-            $query['localCurrency'] = true;
+            $queryKey = $this->forMassExtraction() ? 'LocalCurrency' : 'localCurrency';
+            $query[$queryKey] = true;
         }
 
         return $query;

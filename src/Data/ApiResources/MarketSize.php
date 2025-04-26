@@ -18,9 +18,9 @@ class MarketSize
         public readonly int $dataTypeId,
         public readonly string $dataType,
         public readonly string $unitName,
-        public readonly string $inflationType,
-        public readonly string $exchangeRateName,
-        public readonly string $perCapitaName,
+        public readonly ?string $inflationType,
+        public readonly ?string $exchangeRateName,
+        public readonly ?string $perCapitaName,
         public readonly int $unitMultiplier,
         ?Collection $data = null,
     ) {

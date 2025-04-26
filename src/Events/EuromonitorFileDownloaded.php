@@ -2,6 +2,7 @@
 
 namespace Bernskiold\LaravelEuromonitor\Events;
 
+use Bernskiold\LaravelEuromonitor\Enum\Dataset;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -13,6 +14,7 @@ class EuromonitorFileDownloaded
     public string $disk;
 
     public function __construct(
+        public Dataset $dataset,
         public string $jobId,
         public string $filePath
     ) {

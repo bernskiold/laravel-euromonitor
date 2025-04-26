@@ -19,6 +19,7 @@ use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsUnit;
 use Bernskiold\LaravelEuromonitor\Data\ApiResources\EntityShare;
 use Bernskiold\LaravelEuromonitor\Data\JobResponse;
 use Bernskiold\LaravelEuromonitor\Data\ListResponse;
+use Bernskiold\LaravelEuromonitor\Enum\Dataset;
 use Bernskiold\LaravelEuromonitor\Enum\UnitType;
 use Bernskiold\LaravelEuromonitor\Exceptions\InvalidEuromonitorQueryException;
 use Bernskiold\LaravelEuromonitor\Jobs\DownloadEuromonitorFile;
@@ -66,6 +67,10 @@ class BrandShare extends EuromonitorResource
 
     public function dispatch(): JobResponse
     {
+        if ($this->unit === null) {
+            throw InvalidEuromonitorQueryException::noUnit();
+        }
+
         $this->queueable();
 
         $query = $this->buildQuery();
@@ -74,7 +79,7 @@ class BrandShare extends EuromonitorResource
         $response = $this->client->post('/statistics/createbrandsharejob', $query);
 
         if ($this->automaticallyDownloadFile && isset($response->jobId)) {
-            dispatch(new DownloadEuromonitorFile($response->jobId));
+            dispatch(new DownloadEuromonitorFile($response->jobId, Dataset::BrandShare));
         }
 
         return new JobResponse(
@@ -91,11 +96,18 @@ class BrandShare extends EuromonitorResource
 
     protected function getRules(): array
     {
+        if($this->forMassExtraction()) {
+            return [
+                'categoryIds' => ['array', 'nullable'],
+                'industryCodes' => ['array', 'min:1','max:1', 'required'],
+                'geographyIds' => ['required', 'array'],
+            ];
+        }
+
         return [
             'shareTypeId' => ['required'],
             'geographyIds' => ['array', 'required'],
             'categoryIds' => ['array', 'required_without:industryCodes'],
-            'industryCodes' => ['array', 'required_without:categoryIds'],
         ];
     }
 }
