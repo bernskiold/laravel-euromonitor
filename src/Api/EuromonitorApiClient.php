@@ -143,7 +143,7 @@ class EuromonitorApiClient
      * @throws \Illuminate\Http\Client\ConnectionException
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function post(string $endpoint, array $data = []): object
+    public function post(string $endpoint, array $data = []): ?object
     {
         $response = $this->authorize()
             ->request
