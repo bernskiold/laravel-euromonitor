@@ -98,9 +98,9 @@ class BrandShare extends EuromonitorResource
     {
         if($this->forMassExtraction()) {
             return [
-                'categoryIds' => ['array', 'nullable'],
-                'industryCodes' => ['array', 'min:1','max:1', 'required'],
-                'geographyIds' => ['required', 'array'],
+                'CategoryIds' => ['array', 'nullable'],
+                'IndustryCode' => ['string', 'required'],
+                'GeographyIds' => ['required', 'array'],
             ];
         }
 
