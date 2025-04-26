@@ -3,6 +3,8 @@
 namespace Bernskiold\LaravelEuromonitor\Data\ApiResources;
 
 use Illuminate\Support\Collection;
+use function collect;
+use function is_numeric;
 
 class EntityShare
 {
@@ -49,6 +51,30 @@ class EntityShare
             unitMultiplier: $response->unitMultiplier,
             data: collect($response->data ?? [])
                 ->map(fn (object $datum) => Datum::fromResponse($datum)),
+        );
+    }
+
+    public static function fromFile(object $row): self
+    {
+        return new self(
+            researchYear: $row->ResearchYear,
+            geographyId: $row->GeographyId,
+            geographyName: $row->GeographyName,
+            categoryId: $row->CategoryId,
+            categoryName: $row->CategoryName,
+            industryCode: $row->IndustryCode,
+            industryName: $row->IndustryName,
+            entityName: $row->CompanyName ?? $row->BrandName,
+            dataTypeId: $row->DataTypeId,
+            dataTypeName: $row->DataTypeName,
+            shareTypeId: $row->ShareTypeId,
+            shareTypeName: $row->ShareTypeName,
+            exchangeRateName: $row->ExchangeRateName,
+            unit: $row->Unit,
+            unitMultiplier: $row->UnitMultiplier,
+            data: collect($row)
+                ->filter(fn ($value, $key) => is_numeric($key))
+                ->map(fn ($value, $year) => new Datum($year, $value))
         );
     }
 }
