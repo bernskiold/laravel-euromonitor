@@ -5,6 +5,10 @@ namespace Bernskiold\LaravelEuromonitor\Actions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
+use function config;
+use function ltrim;
+use function parse_url;
+use const PHP_URL_PATH;
 
 class DownloadFile
 {
@@ -13,7 +17,10 @@ class DownloadFile
         $disk = config('euromonitor.mass_extraction.disk', 'local');
         $folder = config('euromonitor.mass_extraction.folder', 'euromonitor');
 
-        $filename = basename($fileUrl);
+        // We need to get the filename from the URL, excluding the query string,
+        // and excluding the leading slash.
+        $filename = parse_url($fileUrl, PHP_URL_PATH);
+        $filename = ltrim($filename, '/'); // Remove leading slash
         $path = "{$folder}/{$filename}";
 
         $response = Http::get($fileUrl);
