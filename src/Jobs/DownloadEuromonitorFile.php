@@ -7,12 +7,16 @@ use Bernskiold\LaravelEuromonitor\Enum\Dataset;
 use Bernskiold\LaravelEuromonitor\Events\EuromonitorFileDownloaded;
 use Bernskiold\LaravelEuromonitor\Exceptions\EuromonitorDownloadException;
 use Bernskiold\LaravelEuromonitor\Facades\Euromonitor;
+use DateTime;
+use DateTimeInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
+use function config;
 use function event;
 
 class DownloadEuromonitorFile implements ShouldQueue
@@ -20,9 +24,10 @@ class DownloadEuromonitorFile implements ShouldQueue
     use InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(
-        public string $jobId,
+        public string  $jobId,
         public Dataset $dataset,
-    ) {
+    )
+    {
         $this->onQueue(config('euromonitor.mass_extraction.queue', 'default'));
     }
 
@@ -44,7 +49,14 @@ class DownloadEuromonitorFile implements ShouldQueue
 
         if ($job->status === 'Queued') {
             Log::debug('Euromonitor job is still queued, waiting...', ['jobId' => $this->jobId]);
-            $this->release(config('euromonitor.mass_extraction.wait_time', 15));
+            $this->release(config('euromonitor.mass_extraction.wait_time', 60));
+
+            return;
+        }
+
+        if ($job->status === 'Processing') {
+            Log::debug('Euromonitor job is processing, waiting...', ['jobId' => $this->jobId]);
+            $this->release(config('euromonitor.mass_extraction.wait_time', 60));
 
             return;
         }
@@ -58,8 +70,20 @@ class DownloadEuromonitorFile implements ShouldQueue
 
         $fileDetails = Euromonitor::jobs()->getDownloadUrl($this->jobId);
 
-        $downloadAction->execute($fileDetails->url);
+        $downloadAction->execute($fileDetails->url, function (string $path, string $disk) {
+            event(new EuromonitorFileDownloaded($this->dataset, $this->jobId, $path, $disk));
+        });
+    }
 
-        event(new EuromonitorFileDownloaded($this->dataset, $this->jobId, $fileDetails->url));
+    public function retryUntil(): DateTime
+    {
+        return now()->addHours(2);
+    }
+
+    public function middleware(): array
+    {
+        return [
+            new RateLimited('euromonitor-download'),
+        ];
     }
 }
