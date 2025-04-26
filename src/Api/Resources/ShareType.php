@@ -48,8 +48,8 @@ class ShareType extends EuromonitorResource
             throw InvalidEuromonitorQueryException::noMeasureType();
         }
 
-        $endpoint = "/catalog/{$this->measureType->value}/datatype";
-        $response = $this->client->get($endpoint, $this->buildQuery());
+        $endpoint = "/catalog/{$this->measureType->value}/sharetype";
+        $response = $this->client->post($endpoint, $this->buildQuery());
 
         return new ListResponse(
             data: $this->mapData($response),
