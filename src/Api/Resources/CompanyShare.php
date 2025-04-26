@@ -98,6 +98,15 @@ class CompanyShare extends EuromonitorResource
 
     protected function getRules(): array
     {
+        if($this->forMassExtraction()) {
+            return [
+                'ShareTypeId' => ['required'],
+                'GeographyIds' => ['array', 'required'],
+                'CategoryIds' => ['array', 'nullable'],
+                'IndustryCode' => ['required', 'string'],
+            ];
+        }
+
         return [
             'shareTypeId' => ['required'],
             'geographyIds' => ['array', 'required'],

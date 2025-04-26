@@ -82,6 +82,13 @@ class MarketSize extends EuromonitorResource
 
     protected function getRules(): array
     {
+        if($this->forMassExtraction()) {
+            return [
+                'CategoryIds' => ['array', 'required_without:industryCodes'],
+                'IndustryCode' => ['string', 'required'],
+            ];
+        }
+
         return [
             'categoryIds' => ['array', 'required_without:industryCodes'],
             'industryCodes' => ['array', 'required_without:categoryIds'],
