@@ -83,7 +83,7 @@ return [
          *
          * This is in seconds.
          */
-        'wait_time' => 60,
+        'wait_time' => 60 * 2, // 2 minutes
 
         /**
          * The filesystem to use for storing the downloaded files.
