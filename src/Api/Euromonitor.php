@@ -9,6 +9,7 @@ use Bernskiold\LaravelEuromonitor\Api\Resources\DataTypes;
 use Bernskiold\LaravelEuromonitor\Api\Resources\Geographies;
 use Bernskiold\LaravelEuromonitor\Api\Resources\Jobs;
 use Bernskiold\LaravelEuromonitor\Api\Resources\MarketSize;
+use Bernskiold\LaravelEuromonitor\Api\Resources\ShareType;
 
 /**
  * Euromonitor API
@@ -58,5 +59,10 @@ class Euromonitor
     public function marketSize(): MarketSize
     {
         return new MarketSize($this->apiClient);
+    }
+
+    public function shareTypes(): ShareType
+    {
+        return new ShareType($this->apiClient);
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Resources\Geographies geographies()
  * @method static Resources\Jobs jobs()
  * @method static Resources\MarketSize marketSize()
+ * @method static Resources\ShareType shareTypes()
  *
  * @see \Bernskiold\LaravelEuromonitor\Api\Euromonitor
  */
