@@ -10,16 +10,18 @@ use Bernskiold\LaravelEuromonitor\Facades\Euromonitor;
 use DateTime;
 use DateTimeInterface;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
+use Throwable;
 use function config;
 use function event;
 
-class DownloadEuromonitorFile implements ShouldQueue
+class DownloadEuromonitorFile implements ShouldQueue, ShouldBeUnique
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -85,5 +87,29 @@ class DownloadEuromonitorFile implements ShouldQueue
         return [
             new RateLimited('euromonitor-download'),
         ];
+    }
+
+    public function uniqueId(): string
+    {
+        return $this->jobId;
+    }
+
+    public function tags(): array
+    {
+        return [
+            'euromonitor',
+            'download',
+            'job-id:'.$this->jobId,
+            'dataset:'.$this->dataset->value,
+        ];
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        Log::error('Failed to download Euromonitor file', [
+            'jobId' => $this->jobId,
+            'dataset' => $this->dataset->value,
+            'exception' => $exception?->getMessage(),
+        ]);
     }
 }
