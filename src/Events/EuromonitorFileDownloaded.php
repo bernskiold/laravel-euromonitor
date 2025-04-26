@@ -11,13 +11,11 @@ class EuromonitorFileDownloaded
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public string $disk;
-
     public function __construct(
         public Dataset $dataset,
         public string $jobId,
-        public string $filePath
+        public string $filePath,
+        public string $disk,
     ) {
-        $this->disk = config('euromonitor.mass_extraction.disk', 'local');
     }
 }
