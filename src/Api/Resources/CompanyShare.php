@@ -84,7 +84,7 @@ class CompanyShare extends EuromonitorResource
 
         if ($this->automaticallyDownloadFile && isset($response->jobId)) {
             dispatch(new DownloadEuromonitorFile($response->jobId, Dataset::CompanyShare))
-                ->delay(now()->addSeconds(config('euromonitor.mass_extraction.delay', 60)));
+                ->delay(now()->addMinutes(5));
         }
 
         return new JobResponse(
