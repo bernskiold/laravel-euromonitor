@@ -25,8 +25,10 @@ use Bernskiold\LaravelEuromonitor\Exceptions\InvalidEuromonitorQueryException;
 use Bernskiold\LaravelEuromonitor\Jobs\DownloadEuromonitorFile;
 
 use function array_map;
+use function config;
 use function dispatch;
 use function in_array;
+use function now;
 
 /**
  * @see https://api-portal.euromonitor.com/user-guide/company-and-brand-share
@@ -81,7 +83,8 @@ class CompanyShare extends EuromonitorResource
         $response = $this->client->post('/statistics/createcompanysharejob', $query);
 
         if ($this->automaticallyDownloadFile && isset($response->jobId)) {
-            dispatch(new DownloadEuromonitorFile($response->jobId, Dataset::CompanyShare));
+            dispatch(new DownloadEuromonitorFile($response->jobId, Dataset::CompanyShare))
+                ->delay(now()->addSeconds(config('euromonitor.mass_extraction.delay', 60)));
         }
 
         return new JobResponse(

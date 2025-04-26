@@ -79,7 +79,8 @@ class BrandShare extends EuromonitorResource
         $response = $this->client->post('/statistics/createbrandsharejob', $query);
 
         if ($this->automaticallyDownloadFile && isset($response->jobId)) {
-            dispatch(new DownloadEuromonitorFile($response->jobId, Dataset::BrandShare));
+            dispatch(new DownloadEuromonitorFile($response->jobId, Dataset::BrandShare))
+                ->delay(now()->addSeconds(config('euromonitor.mass_extraction.delay', 60)));
         }
 
         return new JobResponse(
@@ -91,12 +92,12 @@ class BrandShare extends EuromonitorResource
 
     protected function mapData(array $data): array
     {
-        return array_map(static fn (object $response) => EntityShare::fromResponse($response), $data);
+        return array_map(static fn(object $response) => EntityShare::fromResponse($response), $data);
     }
 
     protected function getRules(): array
     {
-        if($this->forMassExtraction()) {
+        if ($this->forMassExtraction()) {
             return [
                 'CategoryIds' => ['array', 'nullable'],
                 'IndustryCode' => ['string', 'required'],

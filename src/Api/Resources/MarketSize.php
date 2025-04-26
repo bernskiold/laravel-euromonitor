@@ -23,7 +23,9 @@ use Bernskiold\LaravelEuromonitor\Exceptions\InvalidEuromonitorQueryException;
 use Bernskiold\LaravelEuromonitor\Jobs\DownloadEuromonitorFile;
 
 use function array_map;
+use function config;
 use function dispatch;
+use function now;
 
 /**
  * @see https://api-portal.euromonitor.com/user-guide/market-size
@@ -65,7 +67,8 @@ class MarketSize extends EuromonitorResource
         $response = $this->client->post('/statistics/createmarketsizejob', $this->buildQuery());
 
         if ($this->automaticallyDownloadFile && isset($response->jobId)) {
-            dispatch(new DownloadEuromonitorFile($response->jobId,Dataset::MarketSize));
+            dispatch(new DownloadEuromonitorFile($response->jobId,Dataset::MarketSize))
+                ->delay(now()->addSeconds(config('euromonitor.mass_extraction.delay', 60)));
         }
 
         return new JobResponse(
