@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "World",
+        "parentId": null,
+        "parentName": null,
+        "isoAlpha2Code": null
+    },
+    {
+        "id": 2,
+        "name": "Western Europe",
+        "parentId": null,
+        "parentName": null,
+        "isoAlpha2Code": null
+    },
+    {
+        "id": 21,
+        "name": "Belgium",
+        "parentId": 2,
+        "parentName": "Western Europe",
+        "isoAlpha2Code": "BE"
+    },
+    {
+        "id": 211,
+        "name": "Liège",
+        "parentId": 21,
+        "parentName": "Belgium",
+        "isoAlpha2Code": null
+    }
+]

@@ -23,7 +23,7 @@ trait SupportsCategories
 
     public function buildQuerySupportsCategories(array $query): array
     {
-        $queryKey = $this->forMassExtraction() ? 'CategoryIds' : 'categoryIds';
+        $queryKey = $this->usesPascalCaseKeys() ? 'CategoryIds' : 'categoryIds';
 
         if (! empty($this->categories)) {
             $query[$queryKey] = $this->categories;

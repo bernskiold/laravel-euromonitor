@@ -23,7 +23,7 @@ trait SupportsGeographies
 
     public function buildQuerySupportsGeographies(array $query): array
     {
-        $queryKey = $this->forMassExtraction() ? 'GeographyIds' : 'geographyIds';
+        $queryKey = $this->usesPascalCaseKeys() ? 'GeographyIds' : 'geographyIds';
 
         if (! empty($this->geographies)) {
             $query[$queryKey] = $this->geographies;

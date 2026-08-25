@@ -2,12 +2,13 @@
 
 namespace Tests\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Tests\Doubles\FakeResource;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsMassExtraction;
 use Bernskiold\LaravelEuromonitor\Enum\FileType;
 use Mockery;
 
 beforeEach(function () {
-    $this->trait = new class() {
+    $this->trait = new class extends FakeResource {
         use SupportsMassExtraction;
     };
 });

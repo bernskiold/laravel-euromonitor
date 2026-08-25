@@ -1,0 +1,32 @@
+[
+    {
+        "geographyId": 21,
+        "geographyName": "Belgium",
+        "industryCode": "CT",
+        "industryName": "Consumer Tissue",
+        "categoryId": 11069,
+        "categoryName": "Toilet Paper",
+        "companyId": 674613,
+        "companyName": "Essity AB"
+    },
+    {
+        "geographyId": 21,
+        "geographyName": "Belgium",
+        "industryCode": "CT",
+        "industryName": "Consumer Tissue",
+        "categoryId": 11069,
+        "categoryName": "Toilet Paper",
+        "companyId": 674614,
+        "companyName": "Kimberly-Clark Corp"
+    },
+    {
+        "geographyId": 11,
+        "geographyName": "France",
+        "industryCode": "CT",
+        "industryName": "Consumer Tissue",
+        "categoryId": 11069,
+        "categoryName": "Toilet Paper",
+        "companyId": 674613,
+        "companyName": "Essity AB"
+    }
+]

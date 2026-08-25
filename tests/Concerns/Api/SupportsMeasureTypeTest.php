@@ -2,13 +2,14 @@
 
 namespace Tests\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Tests\Doubles\FakeResource;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsMeasureType;
 use Bernskiold\LaravelEuromonitor\Enum\MeasureType;
 use Bernskiold\LaravelEuromonitor\Exceptions\InvalidEuromonitorQueryException;
 use Mockery;
 
 beforeEach(function () {
-    $this->trait = new class() {
+    $this->trait = new class extends FakeResource {
         use SupportsMeasureType;
     };
 });

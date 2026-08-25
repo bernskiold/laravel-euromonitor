@@ -3,6 +3,7 @@
 namespace Bernskiold\LaravelEuromonitor\Api\Resources;
 
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsCategories;
+use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsCompanies;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsDataSlice;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsDataTypes;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsExchangeRate;
@@ -36,6 +37,7 @@ use function now;
 class CompanyShare extends EuromonitorResource
 {
     use SupportsCategories,
+        SupportsCompanies,
         SupportsDataSlice,
         SupportsDataTypes,
         SupportsExchangeRate,

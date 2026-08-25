@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Tissue and Hygiene",
+        "parentId": null,
+        "parentName": null,
+        "level": 0,
+        "industryCode": "DPP",
+        "industryName": "Tissue and Hygiene",
+        "industryOrder": 0
+    },
+    {
+        "id": 10,
+        "name": "Away-from-Home Tissue and Hygiene",
+        "parentId": 1,
+        "parentName": "Tissue and Hygiene",
+        "level": 1,
+        "industryCode": "DPP",
+        "industryName": "Tissue and Hygiene",
+        "industryOrder": 1
+    },
+    {
+        "id": 101,
+        "name": "Away-from-Home Hygiene",
+        "parentId": 10,
+        "parentName": "Away-from-Home Tissue and Hygiene",
+        "level": 2,
+        "industryCode": "DPP",
+        "industryName": "Tissue and Hygiene",
+        "industryOrder": 2
+    },
+    {
+        "id": 11,
+        "name": "Retail Tissue and Hygiene",
+        "parentId": 1,
+        "parentName": "Tissue and Hygiene",
+        "level": 1,
+        "industryCode": "DPP",
+        "industryName": "Tissue and Hygiene",
+        "industryOrder": 3
+    }
+]

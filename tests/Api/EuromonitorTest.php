@@ -4,7 +4,9 @@ namespace Tests\Api;
 
 use Bernskiold\LaravelEuromonitor\Api\Euromonitor;
 use Bernskiold\LaravelEuromonitor\Api\Resources\BrandShare;
+use Bernskiold\LaravelEuromonitor\Api\Resources\Brands;
 use Bernskiold\LaravelEuromonitor\Api\Resources\Categories;
+use Bernskiold\LaravelEuromonitor\Api\Resources\Companies;
 use Bernskiold\LaravelEuromonitor\Api\Resources\CompanyShare;
 use Bernskiold\LaravelEuromonitor\Api\Resources\DataTypes;
 use Bernskiold\LaravelEuromonitor\Api\Resources\Geographies;
@@ -61,4 +63,27 @@ it('returns MarketSize instance', function () {
     $resource = $this->euromonitor->marketSize();
 
     expect($resource)->toBeInstanceOf(MarketSize::class);
+});
+
+it('returns Brands instance', function () {
+    $resource = $this->euromonitor->brands();
+
+    expect($resource)->toBeInstanceOf(Brands::class);
+});
+
+it('returns Companies instance', function () {
+    $resource = $this->euromonitor->companies();
+
+    expect($resource)->toBeInstanceOf(Companies::class);
+});
+
+it('returns ShareType instance', function () {
+    $resource = $this->euromonitor->shareTypes();
+
+    expect($resource)->toBeInstanceOf(\Bernskiold\LaravelEuromonitor\Api\Resources\ShareType::class);
+});
+
+it('returns a fresh resource on every call', function () {
+    expect($this->euromonitor->brands())->not->toBe($this->euromonitor->brands())
+        ->and($this->euromonitor->companies())->not->toBe($this->euromonitor->companies());
 });

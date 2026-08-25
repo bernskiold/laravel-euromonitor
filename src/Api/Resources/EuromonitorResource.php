@@ -114,4 +114,16 @@ class EuromonitorResource
 
         return $this->usesMassExtraction;
     }
+
+    /**
+     * Whether query keys should be built in PascalCase.
+     *
+     * The statistics services expect camelCase keys, while the mass
+     * extraction (Passport Extractor) and catalog company/brand
+     * endpoints expect PascalCase.
+     */
+    protected function usesPascalCaseKeys(): bool
+    {
+        return $this->forMassExtraction();
+    }
 }

@@ -2,8 +2,10 @@
 
 namespace Bernskiold\LaravelEuromonitor\Api;
 
+use Bernskiold\LaravelEuromonitor\Api\Resources\Brands;
 use Bernskiold\LaravelEuromonitor\Api\Resources\BrandShare;
 use Bernskiold\LaravelEuromonitor\Api\Resources\Categories;
+use Bernskiold\LaravelEuromonitor\Api\Resources\Companies;
 use Bernskiold\LaravelEuromonitor\Api\Resources\CompanyShare;
 use Bernskiold\LaravelEuromonitor\Api\Resources\DataTypes;
 use Bernskiold\LaravelEuromonitor\Api\Resources\Geographies;
@@ -26,6 +28,11 @@ class Euromonitor
         protected EuromonitorApiClient $apiClient,
     ) {}
 
+    public function brands(): Brands
+    {
+        return new Brands($this->apiClient);
+    }
+
     public function brandShares(): BrandShare
     {
         return new BrandShare($this->apiClient);
@@ -34,6 +41,11 @@ class Euromonitor
     public function categories(): Categories
     {
         return new Categories($this->apiClient);
+    }
+
+    public function companies(): Companies
+    {
+        return new Companies($this->apiClient);
     }
 
     public function companyShares(): CompanyShare

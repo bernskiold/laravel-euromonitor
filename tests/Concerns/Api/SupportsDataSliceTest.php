@@ -2,11 +2,12 @@
 
 namespace Tests\Concerns\Api;
 
+use Bernskiold\LaravelEuromonitor\Tests\Doubles\FakeResource;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsDataSlice;
 use Mockery;
 
 beforeEach(function () {
-    $this->trait = new class() {
+    $this->trait = new class extends FakeResource {
         use SupportsDataSlice;
     };
 });
@@ -35,7 +36,17 @@ it('sets data slice for lowest level products', function () {
     expect($this->trait->dataSlice)->toBe(2);
 });
 
-it('builds query with data slice', function () {
+it('builds query with the statistics data slice key', function () {
+    $this->trait->dataSlice = 2;
+
+    $query = $this->trait->buildQuerySupportsDataSlice([]);
+
+    expect($query)->toHaveKey('DataSliceID')
+        ->and($query['DataSliceID'])->toBe(2);
+});
+
+it('builds query with the mass extraction data slice key', function () {
+    $this->trait->usesMassExtraction = true;
     $this->trait->dataSlice = 2;
 
     $query = $this->trait->buildQuerySupportsDataSlice([]);

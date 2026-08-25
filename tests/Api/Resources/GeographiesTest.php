@@ -62,3 +62,33 @@ it('handles geographies with null parent', function () {
         ->and($response->get()->first()->parentId)->toBeNull()
         ->and($response->get()->first()->parentName)->toBeNull();
 });
+
+it('maps the documented geography hierarchy', function () {
+    $this->client->shouldReceive('get')
+        ->once()
+        ->with('/catalog/geography')
+        ->andReturn(sample('catalog/geography'));
+
+    $geographies = $this->resource->all()->get();
+
+    expect($geographies)->toHaveCount(4);
+
+    $world = $geographies->firstWhere('id', 1);
+    $belgium = $geographies->firstWhere('id', 21);
+    $liege = $geographies->firstWhere('id', 211);
+
+    expect($world)
+        ->name->toBe('World')
+        ->parentId->toBeNull()
+        ->isoAlpha2Code->toBeNull();
+
+    expect($belgium)
+        ->name->toBe('Belgium')
+        ->parentId->toBe(2)
+        ->parentName->toBe('Western Europe')
+        ->isoAlpha2Code->toBe('BE');
+
+    expect($liege)
+        ->parentId->toBe(21)
+        ->isoAlpha2Code->toBeNull();
+});
