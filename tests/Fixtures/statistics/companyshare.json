@@ -1,0 +1,51 @@
+{
+    "offset": 0,
+    "limit": 1000,
+    "total": 2,
+    "companyShares": [
+        {
+            "researchYear": 2024,
+            "categoryId": 11069,
+            "categoryName": "Toilet Paper",
+            "geographyId": 21,
+            "geographyName": "Belgium",
+            "industryCode": "CT",
+            "industryName": "Consumer Tissue",
+            "companyId": 674613,
+            "companyName": "Essity AB",
+            "dataTypeId": 107,
+            "dataTypeName": "Retail Value RSP",
+            "shareTypeId": 0,
+            "shareTypeName": "Global Brand Owner",
+            "exchangeRateName": "Fixed 2024 Exchange Rate",
+            "unit": "% breakdown",
+            "unitMultiplier": 1,
+            "data": [
+                { "year": 2023, "value": 30.7 },
+                { "year": 2024, "value": 31.5 }
+            ]
+        },
+        {
+            "researchYear": 2024,
+            "categoryId": 11069,
+            "categoryName": "Toilet Paper",
+            "geographyId": 21,
+            "geographyName": "Belgium",
+            "industryCode": "CT",
+            "industryName": "Consumer Tissue",
+            "companyId": 674614,
+            "companyName": "Kimberly-Clark Corp",
+            "dataTypeId": 107,
+            "dataTypeName": "Retail Value RSP",
+            "shareTypeId": 0,
+            "shareTypeName": "Global Brand Owner",
+            "exchangeRateName": "Fixed 2024 Exchange Rate",
+            "unit": "% breakdown",
+            "unitMultiplier": 1,
+            "data": [
+                { "year": 2023, "value": 12.2 },
+                { "year": 2024, "value": 11.8 }
+            ]
+        }
+    ]
+}

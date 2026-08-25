@@ -1,0 +1,12 @@
+[
+    {
+        "id": 0,
+        "name": "Global Brand Owner",
+        "definition": "Share of the brand owner at global level, before any local licensing arrangements."
+    },
+    {
+        "id": 1,
+        "name": "National Brand Owner",
+        "definition": "Share of the brand owner within the researched country."
+    }
+]

@@ -9,7 +9,6 @@ use Throwable;
 
 use function cache;
 use function config;
-use function http_build_query;
 use function now;
 
 /**
@@ -24,8 +23,6 @@ class EuromonitorApiClient
 {
     protected ?string $accessToken = null;
 
-    public PendingRequest $request;
-
     public function __construct(
         protected string $username,
         protected string $password,
@@ -34,7 +31,29 @@ class EuromonitorApiClient
         protected string $version,
     )
     {
-        $this->request = Http::withHeaders([
+    }
+
+    /**
+     * Build a fresh pending request for a single call.
+     *
+     * This is deliberately not cached on the instance: a PendingRequest
+     * carries per-call state, and one built in the constructor would also
+     * escape Http::fake() in tests that fake after the client is made.
+     */
+    /**
+     * Join the base URL and an endpoint without doubling the separator.
+     *
+     * Resources pass endpoints with a leading slash, so a naive
+     * concatenation produces "https://api.euromonitor.com//catalog/brand".
+     */
+    protected function url(string $endpoint): string
+    {
+        return rtrim($this->baseUrl, '/') . '/' . ltrim($endpoint, '/');
+    }
+
+    public function request(): PendingRequest
+    {
+        return Http::withHeaders([
             'Ocp-Apim-Subscription-Key' => $this->apiKey,
         ])
             ->contentType('application/json')
@@ -78,7 +97,7 @@ class EuromonitorApiClient
                 'Accept' => 'application/json; ' . $this->getVersionForHeader(),
                 'Ocp-Apim-Subscription-Key' => $this->apiKey,
             ])
-            ->post($this->baseUrl . '/authentication/connect/token', [
+            ->post($this->url('/authentication/connect/token'), [
                 'username' => $this->username,
                 'password' => $this->password,
                 'grant_type' => 'password',
@@ -126,9 +145,9 @@ class EuromonitorApiClient
     public function get(string $endpoint, array $query = []): object|array
     {
         $response = $this->authorize()
-            ->request
+            ->request()
             ->withToken($this->accessToken)
-            ->get($this->baseUrl . '/' . $endpoint, $query);
+            ->get($this->url($endpoint), $query);
 
         if (!$response->successful()) {
             throw new \Illuminate\Http\Client\RequestException($response);
@@ -146,9 +165,9 @@ class EuromonitorApiClient
     public function post(string $endpoint, array $data = []): object|array|null
     {
         $response = $this->authorize()
-            ->request
+            ->request()
             ->withToken($this->accessToken)
-            ->post($this->baseUrl . '/' . $endpoint, $data);
+            ->post($this->url($endpoint), $data);
 
         if (!$response->successful()) {
             throw new \Illuminate\Http\Client\RequestException($response);

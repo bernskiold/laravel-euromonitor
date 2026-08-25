@@ -64,6 +64,7 @@ it('creates job and dispatches download when requested', function () {
     Queue::fake();
 
     $this->resource->categories([1, 2]);
+    $this->resource->industryCodes(['CT']);
     $this->resource->downloadFileAutomatically();
 
     $apiResponse = (object) [
@@ -94,6 +95,7 @@ it('does not dispatch download when automaticallyDownloadFile is false', functio
     Queue::fake();
 
     $this->resource->categories([1, 2]);
+    $this->resource->industryCodes(['CT']);
     $this->resource->downloadFileManually();
 
     $apiResponse = (object) [

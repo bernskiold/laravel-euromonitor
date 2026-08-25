@@ -73,3 +73,35 @@ it('handles categories with null parent', function () {
         ->and($response->get()->first()->parentId)->toBeNull()
         ->and($response->get()->first()->parentName)->toBeNull();
 });
+
+it('maps the documented category hierarchy', function () {
+    $this->resource->context = Context::StatisticsApi;
+
+    $this->client->shouldReceive('get')
+        ->once()
+        ->with('/catalog/category', Mockery::type('array'))
+        ->andReturn(sample('catalog/category'));
+
+    $categories = $this->resource->all()->get();
+
+    expect($categories)->toHaveCount(4);
+
+    $root = $categories->firstWhere('id', 1);
+    $child = $categories->firstWhere('id', 10);
+    $grandchild = $categories->firstWhere('id', 101);
+
+    expect($root)
+        ->name->toBe('Tissue and Hygiene')
+        ->level->toBe(0)
+        ->parentId->toBeNull()
+        ->industryCode->toBe('DPP');
+
+    expect($child)
+        ->level->toBe(1)
+        ->parentId->toBe(1)
+        ->parentName->toBe('Tissue and Hygiene');
+
+    expect($grandchild)
+        ->level->toBe(2)
+        ->parentId->toBe(10);
+});

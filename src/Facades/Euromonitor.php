@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static Resources\BrandShare brandShares()
+ * @method static Resources\Brands brands()
  * @method static Resources\Categories categories()
+ * @method static Resources\Companies companies()
  * @method static Resources\CompanyShare companyShares()
  * @method static Resources\DataTypes dataTypes()
  * @method static Resources\Geographies geographies()

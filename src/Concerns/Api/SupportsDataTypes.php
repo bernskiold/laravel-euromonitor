@@ -23,7 +23,7 @@ trait SupportsDataTypes
 
     public function buildQuerySupportsDataTypes(array $query): array
     {
-        $queryKey = $this->forMassExtraction() ? 'DataTypeIds' : 'dataTypeIds';
+        $queryKey = $this->usesPascalCaseKeys() ? 'DataTypeIds' : 'dataTypeIds';
 
         if (! empty($this->dataTypes)) {
             $query[$queryKey] = $this->dataTypes;

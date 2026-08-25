@@ -1,0 +1,22 @@
+[
+    {
+        "ResearchYear": 2023,
+        "GeographyId": 21,
+        "GeographyName": "Belgium",
+        "CategoryId": 11069,
+        "CategoryName": "Toilet Paper",
+        "IndustryCode": "CT",
+        "IndustryName": "Consumer Tissue",
+        "CompanyName": "Essity AB",
+        "BrandName": "Lotus",
+        "DataTypeId": 107,
+        "DataTypeName": "Retail Value RSP",
+        "ShareTypeId": 0,
+        "ShareTypeName": "Global Brand Owner",
+        "ExchangeRateName": "Fixed 2023 Exchange Rate",
+        "Unit": "% breakdown",
+        "UnitMultiplier": 1,
+        "2022": 21.4,
+        "2023": 22.1
+    }
+]

@@ -2,7 +2,9 @@
 
 namespace Bernskiold\LaravelEuromonitor\Api\Resources;
 
+use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsBrands;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsCategories;
+use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsCompanies;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsDataSlice;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsDataTypes;
 use Bernskiold\LaravelEuromonitor\Concerns\Api\SupportsExchangeRate;
@@ -31,7 +33,9 @@ use function dispatch;
  */
 class BrandShare extends EuromonitorResource
 {
-    use SupportsCategories,
+    use SupportsBrands,
+        SupportsCategories,
+        SupportsCompanies,
         SupportsDataSlice,
         SupportsDataTypes,
         SupportsExchangeRate,

@@ -20,7 +20,7 @@ trait SupportsShareType
 
     public function buildQuerySupportsShareType(array $query): array
     {
-        $queryKey = $this->forMassExtraction() ? 'ShareTypeId' : 'shareTypeId';
+        $queryKey = $this->usesPascalCaseKeys() ? 'ShareTypeId' : 'shareTypeId';
 
         $query[$queryKey] = $this->shareType;
 

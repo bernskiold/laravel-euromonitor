@@ -1,0 +1,38 @@
+[
+    {
+        "geographyId": 21,
+        "geographyName": "Belgium",
+        "industryCode": "CT",
+        "industryName": "Consumer Tissue",
+        "categoryId": 11069,
+        "categoryName": "Toilet Paper",
+        "companyId": 674613,
+        "companyName": "Essity AB",
+        "brandId": 903112,
+        "brandName": "Lotus"
+    },
+    {
+        "geographyId": 21,
+        "geographyName": "Belgium",
+        "industryCode": "CT",
+        "industryName": "Consumer Tissue",
+        "categoryId": 11069,
+        "categoryName": "Toilet Paper",
+        "companyId": 674614,
+        "companyName": "Kimberly-Clark Corp",
+        "brandId": 903118,
+        "brandName": "Scott"
+    },
+    {
+        "geographyId": 11,
+        "geographyName": "France",
+        "industryCode": "CT",
+        "industryName": "Consumer Tissue",
+        "categoryId": 11069,
+        "categoryName": "Toilet Paper",
+        "companyId": 674613,
+        "companyName": "Essity AB",
+        "brandId": 903112,
+        "brandName": "Lotus"
+    }
+]

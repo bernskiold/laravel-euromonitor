@@ -22,7 +22,7 @@ trait SupportsLocalCurrency
     {
 
         if ($this->useLocalCurrency) {
-            $queryKey = $this->forMassExtraction() ? 'LocalCurrency' : 'localCurrency';
+            $queryKey = $this->usesPascalCaseKeys() ? 'LocalCurrency' : 'localCurrency';
             $query[$queryKey] = true;
         }
 

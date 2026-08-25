@@ -4,7 +4,9 @@ namespace Tests\Facades;
 
 use Bernskiold\LaravelEuromonitor\Api\Euromonitor;
 use Bernskiold\LaravelEuromonitor\Api\Resources\BrandShare;
+use Bernskiold\LaravelEuromonitor\Api\Resources\Brands;
 use Bernskiold\LaravelEuromonitor\Api\Resources\Categories;
+use Bernskiold\LaravelEuromonitor\Api\Resources\Companies;
 use Bernskiold\LaravelEuromonitor\Api\Resources\CompanyShare;
 use Bernskiold\LaravelEuromonitor\Api\Resources\DataTypes;
 use Bernskiold\LaravelEuromonitor\Api\Resources\Geographies;
@@ -88,4 +90,18 @@ it('forwards marketSize call to the underlying instance', function () {
     $resource = EuromonitorFacade::marketSize();
 
     expect($resource)->toBe($expectedResource);
+});
+
+it('forwards brands call to the underlying instance', function () {
+    $expectedResource = Mockery::mock(Brands::class);
+    $this->euromonitor->shouldReceive('brands')->once()->andReturn($expectedResource);
+
+    expect(EuromonitorFacade::brands())->toBe($expectedResource);
+});
+
+it('forwards companies call to the underlying instance', function () {
+    $expectedResource = Mockery::mock(Companies::class);
+    $this->euromonitor->shouldReceive('companies')->once()->andReturn($expectedResource);
+
+    expect(EuromonitorFacade::companies())->toBe($expectedResource);
 });
