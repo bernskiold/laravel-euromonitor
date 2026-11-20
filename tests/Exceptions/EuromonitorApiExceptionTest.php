@@ -1,7 +1,6 @@
 <?php
 
 use Bernskiold\LaravelEuromonitor\Exceptions\EuromonitorApiException;
-use Exception;
 
 it('throws an exception with the correct message and previous exception when access token cannot be retrieved', function () {
     $previousException = new Exception('Previous error');
