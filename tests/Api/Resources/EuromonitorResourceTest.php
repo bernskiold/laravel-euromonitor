@@ -2,7 +2,6 @@
 
 use Bernskiold\LaravelEuromonitor\Api\Resources\EuromonitorResource;
 use Bernskiold\LaravelEuromonitor\Exceptions\InvalidEuromonitorQueryException;
-use Mockery;
 
 beforeEach(function () {
     $this->client = Mockery::mock(\Bernskiold\LaravelEuromonitor\Api\EuromonitorApiClient::class);

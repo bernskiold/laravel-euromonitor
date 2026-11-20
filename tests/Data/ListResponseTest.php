@@ -2,7 +2,6 @@
 
 use Bernskiold\LaravelEuromonitor\Data\ListResponse;
 use Illuminate\Support\Collection;
-use ReflectionProperty;
 
 it('can create a list response with array data', function () {
     $data = ['item1', 'item2', 'item3'];

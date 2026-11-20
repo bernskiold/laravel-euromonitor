@@ -1,7 +1,6 @@
 <?php
 
 use Bernskiold\LaravelEuromonitor\Data\JobDownloadResponse;
-use ReflectionProperty;
 
 it('can create a job download response with all properties', function () {
     $response = new JobDownloadResponse(
